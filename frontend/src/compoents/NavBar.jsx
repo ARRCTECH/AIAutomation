@@ -16,7 +16,7 @@ const NavBar = () => {
   return (
     <nav className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <h1 className="text-xl font-bold text-gray-800">AI Automation</h1>
+        <img src="../public/arrctechielogo.jpeg" alt="logo" className="w-16 h-16" />
         <button
           className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
