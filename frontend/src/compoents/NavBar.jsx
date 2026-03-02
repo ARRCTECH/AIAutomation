@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navLinks = [
@@ -16,26 +17,29 @@ const NavBar = () => {
   return (
     <nav className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <img src="../public/arrctechielogo.jpeg" alt="logo" className="w-16 h-16" />
+        <div className="relative flex-shrink-0 w-12 h-12">
+          <img
+            src="/arrctechielogo.jpeg"
+            alt="logo"
+            className="w-full h-full object-contain"
+          />
+        </div>
         <button
           className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
         >
           <span
-            className={`block w-6 h-0.5 bg-gray-600 transition-transform duration-300 ${
-              isMenuOpen ? "rotate-45 translate-y-2" : ""
-            }`}
+            className={`block w-6 h-0.5 bg-gray-600 transition-transform duration-300 ${isMenuOpen ? "rotate-45 translate-y-2" : ""
+              }`}
           />
           <span
-            className={`block w-6 h-0.5 bg-gray-600 transition-opacity duration-300 ${
-              isMenuOpen ? "opacity-0" : "opacity-100"
-            }`}
+            className={`block w-6 h-0.5 bg-gray-600 transition-opacity duration-300 ${isMenuOpen ? "opacity-0" : "opacity-100"
+              }`}
           />
           <span
-            className={`block w-6 h-0.5 bg-gray-600 transition-transform duration-300 ${
-              isMenuOpen ? "-rotate-45 -translate-y-2" : ""
-            }`}
+            className={`block w-6 h-0.5 bg-gray-600 transition-transform duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""
+              }`}
           />
         </button>
         <div
