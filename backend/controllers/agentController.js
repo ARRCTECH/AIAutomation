@@ -1,40 +1,91 @@
-const AgentInteraction = require('../models/AgentInteraction');
-const { textToSpeech } = require('../services/agentService');
+const { textToSpeech } = require("../services/agentService");
+const AgentInteraction = require("../models/AgentInteraction");
+
 exports.textToSpeechController = async (req, res) => {
   try {
-    const { prompt,language } = req.body;
-    if (!prompt || typeof prompt !== 'string') {
-      return res.status(400).json({ message: 'Prompt is required and must be a string' });
+    const { text, language } = req.body;
+
+    if (!text) {
+      return res.status(400).json({ message: "Text is required" });
     }
-    const agentResponse = await textToSpeech(prompt, language);
-    const interaction = new AgentInteraction({
-      prompt,
-      response:agentResponse,
-      language: language || 'en-IN',
+
+    const response = await textToSpeech(text, language);
+
+    console.log("Sarvam Response:", response);
+
+    // Save the interaction to database
+    await AgentInteraction.create({
+      prompt: text,
+      response: response,
+      language: language || 'en-IN'
     });
-    await interaction.save();
-    res.status(201).json({
-      success: true,
-      data: agentResponse,
-      interactionId: interaction._id,
+
+    // Get base64 audio correctly
+    const audioBase64 =
+      response?.audios?.[0] || response?.audio || response?.data;
+
+    if (!audioBase64) {
+      return res.status(500).json({
+        message: "Audio not received from Sarvam API",
+      });
+    }
+
+    const audioBuffer = Buffer.from(audioBase64, "base64");
+
+    res.set({
+      "Content-Type": "audio/wav",
+      "Content-Length": audioBuffer.length,
     });
+
+    res.send(audioBuffer);
   } catch (error) {
-    console.error('Error in runAgent controller:', error);
-    res.status(500).json({ message: 'Error running agent', error: error.message });
+    console.error(error);
+    res.status(500).json({ message: "TTS generation failed" });
   }
 };
+
+// Add the missing function for getting interactions
 exports.gettextToSpeechData = async (req, res) => {
-    try {
-        const interactions = await AgentInteraction.find();
-        res.status(200).json({
-            success: true,
-            count: interactions.length,
-            data: interactions
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            error: 'Server Error'
-        });
+  try {
+    const interactions = await AgentInteraction.find()
+      .sort({ createdAt: -1 }) // Sort by newest first
+      .limit(50); // Limit to last 50 interactions
+
+    res.status(200).json({
+      success: true,
+      data: interactions
+    });
+  } catch (error) {
+    console.error("Error fetching interactions:", error);
+    res.status(500).json({ 
+      success: false, 
+      message: "Failed to fetch interactions" 
+    });
+  }
+};
+
+// Optional: Add a function to get a specific interaction by ID
+exports.getInteractionById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const interaction = await AgentInteraction.findById(id);
+
+    if (!interaction) {
+      return res.status(404).json({ 
+        success: false, 
+        message: "Interaction not found" 
+      });
     }
+
+    res.status(200).json({
+      success: true,
+      data: interaction
+    });
+  } catch (error) {
+    console.error("Error fetching interaction:", error);
+    res.status(500).json({ 
+      success: false, 
+      message: "Failed to fetch interaction" 
+    });
+  }
 };
