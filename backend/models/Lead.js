@@ -15,20 +15,13 @@ const leadSchema = new mongoose.Schema({
       type: String,
       required: [true, 'Phone number is required'],
       unique: true,
-      validate: {
-        validator: function(v) {
-          return /^[6-9]\d{9}$/.test(v);
-        },
-        message: 'Please provide a valid Indian mobile number'
-      }
+      trim: true
+      // ✅ Validation completely removed
     },
     alternatePhone: {
       type: String,
-      validate: {
-        validator: function(v) {
-          return !v || /^[6-9]\d{9}$/.test(v);
-        }
-      }
+      trim: true
+      // ✅ Validation removed
     },
     email: {
       type: String,
@@ -43,11 +36,8 @@ const leadSchema = new mongoose.Schema({
     },
     whatsapp: {
       type: String,
-      validate: {
-        validator: function(v) {
-          return !v || /^[6-9]\d{9}$/.test(v);
-        }
-      }
+      trim: true
+      // ✅ Validation removed
     }
   },
 
@@ -93,7 +83,26 @@ const leadSchema = new mongoose.Schema({
         'social_media',
         'calling_campaign',
         'walk_in',
-        'partner_portal'
+        'partner_portal',
+        'linkedin',
+        'facebook',
+        'google_ads',
+        'instagram',
+        'twitter',
+        'whatsapp',
+        'email_campaign',
+        'sms_campaign',
+        'seminar',
+        'workshop',
+        'trade_show',
+        'newspaper',
+        'tv_ad',
+        'radio_ad',
+        'friend_referral',
+        'colleague_referral',
+        'family_referral',
+        'existing_customer',
+        'other'
       ],
       default: 'excel_upload'
     },
@@ -107,7 +116,11 @@ const leadSchema = new mongoose.Schema({
       campaign: String,
       referralName: String,
       partnerName: String,
-      websiteUrl: String
+      websiteUrl: String,
+      adName: String,
+      platform: String,
+      eventName: String,
+      sourceName: String
     }
   },
 
@@ -136,6 +149,7 @@ const leadSchema = new mongoose.Schema({
 leadSchema.index({ 'personalInfo.name': 'text', 'personalInfo.phone': 'text', 'personalInfo.email': 'text' });
 leadSchema.index({ status: 1 });
 leadSchema.index({ createdAt: -1 });
+leadSchema.index({ 'source.type': 1 });
 
 // ========== VIRTUAL PROPERTIES ==========
 leadSchema.virtual('fullName').get(function() {
@@ -148,7 +162,6 @@ leadSchema.virtual('daysSinceLastContact').get(function() {
 });
 
 // ========== MIDDLEWARE ==========
-// ✅ FIXED: Using async middleware (no next() function needed)
 leadSchema.pre('save', async function() {
   console.log('🔄 Lead pre-save hook running...');
   
