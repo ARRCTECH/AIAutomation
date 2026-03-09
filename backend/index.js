@@ -16,6 +16,7 @@ const morgan = require("morgan");
 
 const agentRoutes = require('./routes/agentRoutes');
 const chatRoutes = require("./routes/chatRoutes");
+const leadRoutes=require("./routes/leadRoutes");
 
 // Create Express app
 const app = express();
@@ -45,6 +46,7 @@ app.get("/", (req, res) => {
 
 app.use('/api', agentRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/leads", leadRoutes);
 
 // Error Handler
 app.use((err, req, res, next) => {
