@@ -1,5 +1,5 @@
 const express = require('express');
-const Lead = require('../models/Lead');
+const Lead = require('../models/CompanyProfile');
 
 const router = express.Router();
 

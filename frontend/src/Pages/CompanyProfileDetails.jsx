@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx'; // Excel generation library
 
-const LeadsList = () => {
+const CompanyProfileDetails = () => {
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -22,7 +22,7 @@ const LeadsList = () => {
     setLoading(true);
     try {
       const baseUrl = getApiBaseUrl();
-      const response = await fetch(`${baseUrl}/api/leads/details`); // adjust endpoint if needed
+      const response = await fetch(`${baseUrl}/api/companyProfile/details`); // adjust endpoint if needed
       if (!response.ok) throw new Error('Failed to fetch leads');
       const data = await response.json();
       setLeads(data.leads || []);
@@ -210,5 +210,4 @@ const LeadsList = () => {
     </div>
   );
 };
-
-export default LeadsList;
+export default CompanyProfileDetails;

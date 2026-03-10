@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const leadSchema = new mongoose.Schema({
+const CompanyProfileSchema = new mongoose.Schema({
   fullName: { type: String, required: true },
   email: { type: String, required: true },
   phone: { type: String, sparse: true },
@@ -21,4 +21,4 @@ const leadSchema = new mongoose.Schema({
   consent: { type: Boolean, default: false },
 }, { timestamps: true });
 
-module.exports = mongoose.model('LeadDetails', leadSchema);
+module.exports = mongoose.model('CompanyProfile', CompanyProfileSchema);

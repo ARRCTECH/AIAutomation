@@ -39,7 +39,7 @@ app.get("/", (req, res) => {
 });
 
 app.use('/api', agentRoutes);
-app.use('/api/leads', uploadRoutes);
+app.use('/api/companyProfile', uploadRoutes);
 
 
 // Error Handler

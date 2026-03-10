@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
 
-const SalesLeadForm = () => {
+const CompanyProfile = () => {
     const [formData, setFormData] = useState({
         fullName: "",
         email: "",
@@ -206,7 +206,7 @@ const SalesLeadForm = () => {
                 consent: Boolean(formData.consent)
             };
 
-            const response = await fetch(`${apiUrl}/api/leads/upload`, {
+            const response = await fetch(`${apiUrl}/api/companyProfile/upload`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(submitData),
@@ -854,4 +854,4 @@ const SalesLeadForm = () => {
     );
 };
 
-export default SalesLeadForm;
+export default CompanyProfile;
