@@ -194,9 +194,7 @@ const LeadTable = ({ leads, loading, onEdit, onDelete }) => {
                   <span className="font-mono text-sm">
                     {lead.personalInfo?.phone ? leadAPI.formatPhone(lead.personalInfo.phone) : '-'}
                   </span>
-                  {lead.personalInfo?.whatsapp && (
-                    <span className="ml-2 text-xs text-green-600" title="WhatsApp">📱</span>
-                  )}
+                  
                 </td>
 
                 {/* Email */}

@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "precommit": "^1.2.2"
+    "axios": "^1.13.6",
+    "precommit": "^1.2.2",
+    "react-icons": "^5.6.0"
   }
 }
