@@ -2,11 +2,6 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
-// 🔴 DEBUG - Check key load hui ya nahi
-console.log("🚀 Server Starting...");
-console.log("GROQ_API_KEY loaded:", process.env.GROQ_API_KEY ? "✅ YES" : "❌ NO");
-console.log("GROQ_API_KEY first 10 chars:", process.env.GROQ_API_KEY?.substring(0, 10) + "...");
-
 // FIR baaki sab imports
 const express = require("express");
 const mongoose = require("mongoose");
@@ -15,7 +10,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 
 const agentRoutes = require('./routes/agentRoutes');
-const chatRoutes = require("./routes/chatRoutes");
+const uploadRoutes = require('./routes/upload');
 
 // Create Express app
 const app = express();
@@ -44,7 +39,8 @@ app.get("/", (req, res) => {
 });
 
 app.use('/api', agentRoutes);
-app.use("/api/chat", chatRoutes);
+app.use('/api/leads', uploadRoutes);
+
 
 // Error Handler
 app.use((err, req, res, next) => {
