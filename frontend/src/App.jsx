@@ -1,16 +1,16 @@
-// App.js
+import { Routes, Route } from 'react-router-dom';
+import CompanyProfile from './Pages/CompanyProfile';
+import CompanyProfileDetails from './Pages/CompanyProfileDetails';
+import Whatsapp from './Pages/Whatsapp';
+// import other components as needed
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from "./compoents/HomePage";
-import LeadManagement from "./pages/Leads/LeadManagement"; 
-
-function App() {
+export default function App() {
   return (
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/leads" element={<LeadManagement />} />
-      </Routes>
+    <Routes>
+      <Route path="/companyProfile" element={<CompanyProfile />} />
+      <Route path="/companyProfileDetails" element={<CompanyProfileDetails />} />
+      <Route path="/whatsapp" element={<Whatsapp/>} />
+      {/* Add other routes as needed */}
+    </Routes>
   );
 }
-
-export default App;
