@@ -3,7 +3,7 @@ import CompanyProfile from './Pages/CompanyProfile';
 import CompanyProfileDetails from './Pages/CompanyProfileDetails';
 import Whatsapp from './Pages/Whatsapp';
 import HomePage from "./compoents/HomePage";
-import LeadManagement from "./pages/Leads/LeadManagement"; 
+import LeadManagement from "./Pages/Leads/LeadManagement"; 
 
 export default function App() {
   return (
